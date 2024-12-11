@@ -34,19 +34,62 @@ class Reseau:
         self.strat = strat
 
     def valider_reseau(self) -> bool:
-        # TODO
-        return False
+        # Vérifie si un nœud d'entrée est défini
+        if self.noeud_entree == -1:
+            return False
+
+        # Liste des nœuds visités (initialement, seul le noeud d'entrée est visité)
+        visited = set([self.noeud_entree])
+        to_visit = [self.noeud_entree]
+
+        # Effectue une recherche en largeur (BFS) pour vérifier la connectivité
+        while to_visit:
+            current = to_visit.pop(0)
+            for n1, n2 in self.arcs:
+                if n1 == current and n2 not in visited:
+                    visited.add(n2)
+                    to_visit.append(n2)
+                elif n2 == current and n1 not in visited:
+                    visited.add(n1)
+                    to_visit.append(n1)
+
+        # Vérifie si tous les nœuds sont visités
+        return len(visited) == len(self.noeuds)
 
     def valider_distribution(self, t: Terrain) -> bool:
-        # TODO
-        return False
+        if self.noeud_entree == -1:
+            return False  # Aucun nœud d'entrée défini
+
+        # Vérifie que chaque client est relié à un nœud
+        clients = set()
+        for i, ligne in enumerate(t.cases):
+            for j, case in enumerate(ligne):
+                if case == Case.CLIENT:
+                    clients.add((i, j))
+
+        # Vérifie que chaque client est bien représenté par un nœud
+        for client in clients:
+            if client not in self.noeuds.values():
+                return False
+
+        # Vérifie la position du nœud d'entrée
+        entree_position = self.noeuds.get(self.noeud_entree)
+        if entree_position is None or entree_position not in t.cases:
+            return False
+
+        return True
 
     def configurer(self, t: Terrain):
         self.noeud_entree, self.noeuds, self.arcs  = self.strat.configurer(t)
 
     def afficher(self) -> None:
-        # TODO
-        pass
+        print("Nœuds du réseau :")
+        for noeud, coord in self.noeuds.items():
+            print(f"Noeud {noeud}: {coord}")
+        
+        print("\nArcs du réseau :")
+        for arc in self.arcs:
+            print(f"Arc: {arc}")
 
     def afficher_avec_terrain(self, t: Terrain) -> None:
         for ligne, l in enumerate(t.cases):
