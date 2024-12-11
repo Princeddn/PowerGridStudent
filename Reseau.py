@@ -42,7 +42,7 @@ class Reseau:
         visited = set([self.noeud_entree])
         to_visit = [self.noeud_entree]
 
-        # Effectue une recherche en largeur (BFS) pour vérifier la connectivité
+        # Effectue une recherche en largeur pour vérifier la connectivité
         while to_visit:
             current = to_visit.pop(0)
             for n1, n2 in self.arcs:
