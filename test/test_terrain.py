@@ -8,7 +8,7 @@ class TestTerrain(unittest.TestCase):
 
     def test_chargement(self):
         t= Terrain()
-        fichier_test='t1.txt'
+        fichier_test='terrains/t1.txt'
         t.charger(fichier_test)
         
         self.assertEqual(t.largeur,21)
