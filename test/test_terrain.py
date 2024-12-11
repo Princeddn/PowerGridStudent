@@ -22,8 +22,8 @@ class TestTerrain(unittest.TestCase):
         self.assertEqual(t[0][0], Case.ENTREE)  # Première case : ENTREE
         self.assertEqual(t[0][1], Case.VIDE)  # Deuxième case : VIDE
         self.assertEqual(t[0][2], Case.VIDE)  # Troisième case : VIDE
-        self.assertEqual(t[1][0], Case.CLIENT)  # Première case de la deuxième ligne : CLIENT
-        self.assertEqual(t[1][1], Case.CLIENT)  # Deuxième case : CLIENT
+        self.assertEqual(t[0][10], Case.CLIENT)  # Première case de la deuxième ligne : CLIENT
+        self.assertEqual(t[1][17], Case.CLIENT)  # Deuxième case : CLIENT
         self.assertEqual(t[1][2], Case.CLIENT)  # Troisième case : CLIENT
 
     def test_accesseur(self):

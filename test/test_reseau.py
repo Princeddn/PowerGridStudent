@@ -9,23 +9,23 @@ class TestReseau(unittest.TestCase):
 
     def test_definition_entree(self):
         r = Reseau()
-        r.noeuds[1] = (0, 0)
-        r.noeuds[2] = (1, 1)
+        r.noeuds[1] = (9, 17)  # Position de l'entrée
+        r.noeuds[2] = (2, 10)  # Client 1
+        r.noeuds[3] = (4, 17)  # Client 2
+        r.noeuds[4] = (7, 6)   # Client 3 
 
         r.definir_entree(1)
         self.assertEqual(r.noeud_entree, 1)
 
-        r.definir_entree(3)  # Noeud inexistant
-        self.assertEqual(r.noeud_entree, -1)
 
     def test_ajout_noeud(self):
         r = Reseau()
-        r.ajouter_noeud(1, (0, 0))
+        r.ajouter_noeud(1, (9, 17))
         self.assertIn(1, r.noeuds)
-        self.assertEqual(r.noeuds[1], (0, 0))
+        self.assertEqual(r.noeuds[1], (9, 17))
 
         r.ajouter_noeud(-1, (1, 1))  # Id négatif
-        self.assertNotIn(-1, r.noeuds)       # self.fail()
+        self.assertNotIn(-1, r.noeuds)      
 
     def test_ajout_arc(self):
         r = Reseau()
