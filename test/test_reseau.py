@@ -8,16 +8,39 @@ from Terrain import Terrain, Case
 class TestReseau(unittest.TestCase):
 
     def test_definition_entree(self):
-        # TODO
-        self.fail()
+        r = Reseau()
+        r.noeuds[1] = (0, 0)
+        r.noeuds[2] = (1, 1)
+
+        r.definir_entree(1)
+        self.assertEqual(r.noeud_entree, 1)
+
+        r.definir_entree(3)  # Noeud inexistant
+        self.assertEqual(r.noeud_entree, -1)
 
     def test_ajout_noeud(self):
-        # TODO
-        self.fail()
+        r = Reseau()
+        r.ajouter_noeud(1, (0, 0))
+        self.assertIn(1, r.noeuds)
+        self.assertEqual(r.noeuds[1], (0, 0))
+
+        r.ajouter_noeud(-1, (1, 1))  # Id négatif
+        self.assertNotIn(-1, r.noeuds)       # self.fail()
 
     def test_ajout_arc(self):
-        # TODO
-        self.fail()
+        r = Reseau()
+        r.noeuds[1] = (0, 0)
+        r.noeuds[2] = (1, 1)
+        r.noeuds[3] = (2, 2)
+
+        r.ajouter_arc(1, 2)
+        self.assertIn((1, 2), r.arcs)
+
+        r.ajouter_arc(3, 1)
+        self.assertIn((1, 3), r.arcs)
+
+        r.ajouter_arc(1, 4)  # Noeud inexistant
+        self.assertNotIn((1, 4), r.arcs)
 
     def test_validation_correcte(self):
         r = Reseau()
