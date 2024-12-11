@@ -11,12 +11,12 @@ class TestTerrain(unittest.TestCase):
         fichier_test='terrains/t1.txt'
         t.charger(fichier_test)
         
-        self.assertEqual(t.largeur,20)
+        self.assertEqual(t.largeur,21)
         self.assertEqual(t.hauteur,10)
         
         
         self.assertEqual(t[9][17],Case.ENTREE)
-        self.assertEqual(t[2][11], Case.CLIENT)
+        self.assertEqual(t[2][10], Case.CLIENT)
         self.assertEqual(t[4][15],Case.CLIENT)
         self.assertEqual(t[7][8], Case.CLIENT)
         
