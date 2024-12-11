@@ -17,15 +17,16 @@ class TestTerrain(unittest.TestCase):
         
         self.assertEqual(t[9][17],Case.ENTREE)
         self.assertEqual(t[2][10], Case.CLIENT)
-        self.assertEqual(t[4][15],Case.CLIENT)
-        self.assertEqual(t[7][8], Case.CLIENT)
+        self.assertEqual(t[4][17],Case.CLIENT)
+        self.assertEqual(t[7][6], Case.CLIENT)
         
         
-        self.assertEqual(t[0][0], Case.VIDE)
-        self.assertEqual(t[6][12],Case.VIDE)
+        self.assertEqual(t[0][1], Case.VIDE)
+        self.assertEqual(t[6][9],Case.VIDE)
         
         
         self.assertEqual(t[4][10], Case.OBSTACLE)
+        self.assertEqual(t[6][11], Case.OBSTACLE)
         
 
     def test_accesseur(self):
