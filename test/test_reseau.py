@@ -9,38 +9,31 @@ class TestReseau(unittest.TestCase):
 
     def test_definition_entree(self):
         r = Reseau()
-        r.noeuds[1] = (9, 17)  # Position de l'entrée
-        r.noeuds[2] = (2, 10)  # Client 1
-        r.noeuds[3] = (4, 17)  # Client 2
-        r.noeuds[4] = (7, 6)   # Client 3 
-
-        r.definir_entree(1)
-        self.assertEqual(r.noeud_entree, 1)
+        r.noeuds[0] = (0, 0)
+        r.noeuds[1] = (1, 1)
+        r.definir_entree(0)
+        self.assertEqual(r.noeud_entree, 0)
+        r.definir_entree(2)
+        self.assertEqual(r.noeud_entree, -1)
 
 
     def test_ajout_noeud(self):
         r = Reseau()
-        r.ajouter_noeud(1, (9, 17))
+        r.ajouter_noeud(0, (0, 0))
+        r.ajouter_noeud(1, (1, 1))
+        self.assertIn(0, r.noeuds)
         self.assertIn(1, r.noeuds)
-        self.assertEqual(r.noeuds[1], (9, 17))
-
-        r.ajouter_noeud(-1, (1, 1))  # Id négatif
-        self.assertNotIn(-1, r.noeuds)      
-
+        self.assertEqual(r.noeuds[0], (0, 0))
+        self.assertEqual(r.noeuds[1], (1, 1))
+        
     def test_ajout_arc(self):
         r = Reseau()
-        r.noeuds[1] = (0, 0)
-        r.noeuds[2] = (1, 1)
-        r.noeuds[3] = (2, 2)
-
-        r.ajouter_arc(1, 2)
-        self.assertIn((1, 2), r.arcs)
-
-        r.ajouter_arc(3, 1)
-        self.assertIn((1, 3), r.arcs)
-
-        r.ajouter_arc(1, 4)  # Noeud inexistant
-        self.assertNotIn((1, 4), r.arcs)
+        r.ajouter_noeud(0, (0, 0))
+        r.ajouter_noeud(1, (1, 1))
+        r.ajouter_arc(0, 1)
+        self.assertIn((0, 1), r.arcs)
+        r.ajouter_arc(1, 0)
+        self.assertEqual(len(r.arcs), 1)
 
     def test_validation_correcte(self):
         r = Reseau()

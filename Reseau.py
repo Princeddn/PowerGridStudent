@@ -34,47 +34,38 @@ class Reseau:
         self.strat = strat
 
     def valider_reseau(self) -> bool:
-        # Vérifie si un nœud d'entrée est défini
         if self.noeud_entree == -1:
             return False
 
-        # Liste des nœuds visités (initialement, seul le noeud d'entrée est visité)
-        visited = set([self.noeud_entree])
+        visited = set()
         to_visit = [self.noeud_entree]
 
-        # Effectue une recherche en largeur pour vérifier la connectivité
         while to_visit:
-            current = to_visit.pop(0)
+            current = to_visit.pop()
+            if current in visited:
+                continue
+            visited.add(current)
             for n1, n2 in self.arcs:
                 if n1 == current and n2 not in visited:
-                    visited.add(n2)
                     to_visit.append(n2)
                 elif n2 == current and n1 not in visited:
-                    visited.add(n1)
                     to_visit.append(n1)
 
-        # Vérifie si tous les nœuds sont visités
         return len(visited) == len(self.noeuds)
 
     def valider_distribution(self, t: Terrain) -> bool:
         if self.noeud_entree == -1:
-            return False  # Aucun nœud d'entrée défini
+            return False
 
-        # Vérifie que chaque client est relié à un nœud
-        clients = set()
-        for i, ligne in enumerate(t.cases):
-            for j, case in enumerate(ligne):
-                if case == Case.CLIENT:
-                    clients.add((i, j))
-
-        # Vérifie que chaque client est bien représenté par un nœud
+        clients = t.get_clients()
+        noeuds_positions = set(self.noeuds.values())
+        
         for client in clients:
-            if client not in self.noeuds.values():
+            if client not in noeuds_positions:
                 return False
 
-        # Vérifie la position du nœud d'entrée
-        entree_position = self.noeuds.get(self.noeud_entree)
-        if entree_position is None or entree_position not in t.cases:
+        entree_position = self.noeuds.get(self.noeud_entree, None)
+        if entree_position is None or entree_position != t.get_entree():
             return False
 
         return True
