@@ -157,8 +157,10 @@ class Reseau:
             cv2.circle(image, (y * 20 + 10, x * 20 + 10), 5, (0, 255, 255), -1)
 
         # Sauvegarder et afficher
-        cv2.imwrite("terrain_reseau.png", image)
-        print("Image sauvegardée sous le nom 'terrain_reseau.png'")
-        cv2.imshow("Réseau", image)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+            cv2.imwrite("terrain_reseau.png", image)
+            print("Image sauvegardée sous le nom 'terrain_reseau.png'")
+            cv2.imshow("Réseau", image)
+
+            # Attendre une touche ou fermer automatiquement après 5 secondes
+            if cv2.waitKey(5000) & 0xFF == 27:  # Ferme la fenêtre si 'Esc' est pressée
+                cv2.destroyAllWindows()
