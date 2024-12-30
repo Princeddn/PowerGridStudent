@@ -44,16 +44,17 @@ class StrategieReseauAuto(StrategieReseau):
     def configurer(self, t: Terrain) -> tuple[int, dict[int, tuple[int, int]], list[int]]:
         noeuds = {}
         arcs = []
-        
+        # Identifier les clients et l'entrée
         clients = t.get_clients()
         entree = t.get_entree()
         
         if entree == (-1, -1):
-            return -1, {}, []
-
+            return -1, {}, [] #Aucun noeud d'entrée trouvé 
+        #Ajoute l'entrée comme noeud 0
         noeuds[0] = entree
+        #Ajoute les clients comme noeuds
         for i, client in enumerate(clients, start=1):
             noeuds[i] = client
-            arcs.append((0, i))
+            arcs.append((0, i)) #connecte chaque client à l'entrée 
         
         return 0, noeuds, arcs

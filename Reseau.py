@@ -123,7 +123,7 @@ class Reseau:
         return cout
 
 
-    def generer_image(self, t: Terrain) -> None:
+    def generer_image(self, t: Terrain, filename: str) -> None:
         import numpy as np
         import cv2
 
@@ -131,12 +131,12 @@ class Reseau:
         height, width = len(t.cases), len(t.cases[0])
         image = np.zeros((height * 20, width * 20, 3), dtype=np.uint8)
 
-        # Couleurs des cases
+        # Couleurs pour les cases
         colors = {
-            Case.VIDE: (255, 255, 255),     # Blanc
-            Case.OBSTACLE: (0, 0, 0),       # Noir
-            Case.CLIENT: (0, 255, 0),       # Vert
-            Case.ENTREE: (255, 0, 0)        # Rouge
+            Case.VIDE: (255, 255, 255),
+            Case.OBSTACLE: (0, 0, 0),
+            Case.CLIENT: (0, 255, 0),
+            Case.ENTREE: (255, 0, 0)
         }
 
         # Dessiner les cases
@@ -157,10 +157,10 @@ class Reseau:
             cv2.circle(image, (y * 20 + 10, x * 20 + 10), 5, (0, 255, 255), -1)
 
         # Sauvegarder et afficher
-            cv2.imwrite("terrain_reseau.png", image)
-            print("Image sauvegardée sous le nom 'terrain_reseau.png'")
-            cv2.imshow("Réseau", image)
+        cv2.imwrite(filename, image)
+        print(f"Image sauvegardée sous le nom '{filename}'")
+        cv2.imshow("Réseau", image)
 
-            # Attendre une touche ou fermer automatiquement après 5 secondes
-            if cv2.waitKey(5000) & 0xFF == 27:  # Ferme la fenêtre si 'Esc' est pressée
-                cv2.destroyAllWindows()
+        # Attendre une touche ou fermer automatiquement après 5 secondes
+        if cv2.waitKey(5000) & 0xFF == 27:  # Ferme la fenêtre si 'Esc' est pressée
+            cv2.destroyAllWindows()
