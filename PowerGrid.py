@@ -19,6 +19,7 @@ if __name__ == "__main__":
         print("Configuration valide simple trouvée")
         print("Cout : {}M€".format(reseau.calculer_cout(terrain)))
         reseau.afficher_avec_terrain(terrain)
+        reseau.generer_image(terrain)
     else:
         print("Pas de configuration valide trouvée.")
 
@@ -29,6 +30,7 @@ if __name__ == "__main__":
         print("Configuration valide optimale trouvée")
         print("Cout : {}M€".format(reseau.calculer_cout(terrain)))
         reseau.afficher_avec_terrain(terrain)
+        reseau.generer_image(terrain)
     else:
         print("Pas de configuration valide optimale trouvée.")
 

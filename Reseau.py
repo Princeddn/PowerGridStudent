@@ -82,6 +82,7 @@ class Reseau:
         for arc in self.arcs:
             print(f"Arc: {arc}")
 
+
     def afficher_avec_terrain(self, t: Terrain) -> None:
         for ligne, l in enumerate(t.cases):
             for colonne, c in enumerate(l):
@@ -108,6 +109,7 @@ class Reseau:
                     else:
                         print(" ", end="")
             print()
+        
 
     def calculer_cout(self, t: Terrain) -> float:
         cout = 0
@@ -120,3 +122,43 @@ class Reseau:
                 cout += 1
         return cout
 
+
+    def generer_image(self, t: Terrain) -> None:
+        import numpy as np
+        import cv2
+
+        # Dimensions du terrain
+        height, width = len(t.cases), len(t.cases[0])
+        image = np.zeros((height * 20, width * 20, 3), dtype=np.uint8)
+
+        # Couleurs des cases
+        colors = {
+            Case.VIDE: (255, 255, 255),     # Blanc
+            Case.OBSTACLE: (0, 0, 0),       # Noir
+            Case.CLIENT: (0, 255, 0),       # Vert
+            Case.ENTREE: (255, 0, 0)        # Rouge
+        }
+
+        # Dessiner les cases
+        for i, ligne in enumerate(t.cases):
+            for j, case in enumerate(ligne):
+                color = colors[case]
+                cv2.rectangle(image, (j * 20, i * 20), ((j + 1) * 20, (i + 1) * 20), color, -1)
+
+        # Dessiner les arcs
+        for n1, n2 in self.arcs:
+            coord1 = self.noeuds[n1]
+            coord2 = self.noeuds[n2]
+            cv2.line(image, (coord1[1] * 20 + 10, coord1[0] * 20 + 10),
+                    (coord2[1] * 20 + 10, coord2[0] * 20 + 10), (0, 0, 255), 2)
+
+        # Dessiner les nœuds
+        for _, (x, y) in self.noeuds.items():
+            cv2.circle(image, (y * 20 + 10, x * 20 + 10), 5, (0, 255, 255), -1)
+
+        # Sauvegarder et afficher
+        cv2.imwrite("terrain_reseau.png", image)
+        print("Image sauvegardée sous le nom 'terrain_reseau.png'")
+        cv2.imshow("Réseau", image)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
